@@ -1,0 +1,32 @@
+===========================train_params===========================
+model_name:TextSR_STT
+python:python3.7
+gpu_list:0
+use_gpu:True|False
+--epochs:lite_train_lite_infer=1
+--output_dir:
+--batch_size:lite_train_lite_infer=16
+--resume:
+train_model_name:model_best.pdparams
+--data_path:
+##
+trainer:norm_train
+norm_train:train.py --output_dir=./test_tipc/output/
+##
+===========================eval_params===========================
+eval:eval.py --output_dir=./test_tipc/output/ --resume './test_tipc/output/tbsrn_crnn_train/model_best.pdparams'
+##
+===========================infer_params===========================
+--save_inference_dir:./test_tipc/output/textsr_stt_small_infer/
+--pretrained:
+norm_export:deploy/export_model.py --pretrained './test_tipc/output/tbsrn_crnn_train/model_best.pdparams'
+##
+train_model:./test_tipc/output/tbsrn_crnn_train/model_best.pdparams
+infer_export:deploy/export_model.py
+##
+inference:deploy/infer.py
+--use_gpu:True|False
+--batch_size:1
+--model_dir:./test_tipc/output/textsr_stt_small_infer/
+--image_name:demo1.png
+--benchmark:False
