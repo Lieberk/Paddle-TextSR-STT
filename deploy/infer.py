@@ -46,8 +46,8 @@ class InferenceEngine(object):
 
         # init inference engine
         self.predictor, self.config, self.input_tensors, self.output_tensors = self.load_predictor(
-            os.path.join(args.model_dir, "inference.pdmodel"),
-            os.path.join(args.model_dir, "inference.pdiparams"))
+            os.path.join(args.save_inference_dir, "inference.pdmodel"),
+            os.path.join(args.save_inference_dir, "inference.pdiparams"))
 
         # build transforms
         self.transforms = transforms.ToTensor()
@@ -178,8 +178,6 @@ def get_args(add_help=True):
 
     parser = argparse.ArgumentParser(
         description="PaddlePaddle Classification Training", add_help=add_help)
-    parser.add_argument(
-        "--model_dir", default="deploy", help="inference model dir")
     parser.add_argument('--rec', default='crnn', choices=['crnn'])
     parser.add_argument('--mask', action='store_true', default=False, help='')
     parser.add_argument('--crnn_pretrained', type=str, default='./dataset/mydata/crnn.pdparams', help='')
